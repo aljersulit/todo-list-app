@@ -1,17 +1,31 @@
 import { useState } from "react";
-import { signup, login } from "../../services/authService";
+import { signup, login, passwordValidate } from "../../services/authService";
 
 const Auth = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [isSignUp, setIsSignUp] = useState(false);
+  const [errors, setErrors] = useState([]);
 
 	const handleAuth = async () => {
 		try {
-			if (isSignUp) {
-				await signup(email, password);
+      const status = await passwordValidate(password);
+      if (!status.isValid) {
+        setErrors(["Password must be atleast 6 characters long"]);
+      } else if (isSignUp) {
+				signup(email, password).then((userCredential) => {
+					if (userCredential.user) {
+						setEmail("");
+						setPassword("");
+					}
+				});
 			} else {
-				await login(email, password);
+				login(email, password).then((userCredential) => {
+					if (userCredential.user) {
+						setEmail("");
+						setPassword("");
+					}
+				});
 			}
 		} catch (error) {
 			console.error(error);
@@ -70,6 +84,7 @@ const Auth = () => {
 							className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 							required
 						/>
+            {errors && <p style={{ color: "red" }}>{errors}</p>}
 					</div>
 					<div className="flex items-center justify-between">
 						<a

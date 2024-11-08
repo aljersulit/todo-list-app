@@ -1,5 +1,5 @@
 import { auth } from '../firebaseConfig';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, validatePassword} from 'firebase/auth';
 
 const signup = (email, password) => createUserWithEmailAndPassword(auth, email, password);
 
@@ -7,4 +7,6 @@ const login = (email, password) => signInWithEmailAndPassword(auth, email, passw
 
 const logout = () => signOut(auth);
 
-export { signup, login, logout };
+const passwordValidate = (passwordFromUser) => validatePassword(auth, passwordFromUser);
+
+export { signup, login, logout, passwordValidate };
