@@ -65,7 +65,7 @@ function ForgotPassword() {
 						</div>
 					) : (
 						<>
-							<p>
+							<p className="text-lime-400">
 								Password reset email sent successfully!{<br />}{" "}
 								Please check your email.
 							</p>
