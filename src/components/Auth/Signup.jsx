@@ -36,7 +36,7 @@ function Signup() {
 				<h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
           Sign up for new account
 				</h1>
-					{error && <p style={{ color: "red" }}>{error}</p>}
+					{error && <p className="text-red-500">{error}</p>}
 				<form
 					className="space-y-4 md:space-y-6"
 					onSubmit={handleSubmit}
