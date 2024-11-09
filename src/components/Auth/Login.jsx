@@ -16,8 +16,14 @@ function Login() {
 			await login(email, password);
 			navigate('/');
     } catch (error) {
-      console.log(error);
-			setError("Login Failed");
+      switch (error.code) {
+        case 'auth/invalid-credential':
+          setError("User doesn't exist");
+          break;
+				default:
+					setError('An unknown error occurred.');
+			}
+			console.error("Error during account creation:", error);
     }
   }
 
