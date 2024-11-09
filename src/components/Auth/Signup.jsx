@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { signup } from "../../services/authService";
 
 function Signup() {
@@ -8,12 +8,14 @@ function Signup() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const navigate = useNavigate();
 
 	const handleAuth = async () => {
 		try {
 			setError("");
 			setIsSubmitting(true);
 			await signup(email, password);
+			navigate('/login');
 		} catch (error) {
 			console.log(error);
 			setError("Failed to create an account");
