@@ -17,8 +17,20 @@ function Signup() {
 			await signup(email, password);
 			navigate('/login');
 		} catch (error) {
-			console.log(error);
-			setError("Failed to create an account");
+			switch (error.code) {
+        case 'auth/email-already-in-use':
+          setError('This email is already in use.');
+          break;
+        case 'auth/invalid-email':
+          setError('This email is invalid.');
+          break;
+				case 'auth/weak-password':
+					setError('Password must be atleast 6 characters.');
+					break;
+				default:
+					setError('An unknown error occurred.');
+			}
+			console.error("Error during account creation:", error);
 		}
 		setIsSubmitting(false);
 	}
