@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { login } from "../../services/authService";
 
 function Login() {
@@ -7,13 +7,14 @@ function Login() {
 	const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 	const [isSubmitting, setIsSubmitting] = useState(false);
-
+	const navigate = useNavigate();
 
   const handleAuth = async () => {
     try {
 			setError("");
 			setIsSubmitting(true);
 			await login(email, password);
+			navigate('/');
     } catch (error) {
       console.log(error);
 			setError("Login Failed");
