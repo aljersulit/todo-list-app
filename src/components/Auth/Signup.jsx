@@ -1,14 +1,33 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { signup } from "../../services/authService";
 
 function Signup() {
   const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  // const [errors, setErrors] = useState([]);
+  const [error, setError] = useState("");
+	const [isSubmitting, setIsSubmitting] = useState(false);
+
+	const handleAuth = async () => {
+		try {
+			setError("");
+			setIsSubmitting(true);
+			await signup(email, password);
+		} catch (error) {
+			console.log(error);
+			setError("Failed to create an account");
+		}
+		setIsSubmitting(false);
+	}
 
   const handleSubmit = (e) => {
 		e.preventDefault();
-		// handleAuth();
+		if (password !== confirmPassword) {
+			setError("Passwords do not match");
+		} else {
+			handleAuth();
+		}
 	};
 
   return (
@@ -17,6 +36,7 @@ function Signup() {
 				<h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
           Sign up for new account
 				</h1>
+					{error && <p style={{ color: "red" }}>{error}</p>}
 				<form
 					className="space-y-4 md:space-y-6"
 					onSubmit={handleSubmit}
@@ -56,7 +76,6 @@ function Signup() {
 							className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 							required
 						/>
-            {/* {errors && <p style={{ color: "red" }}>{errors}</p>} */}
 					</div>
           <div>
 						<label
@@ -75,22 +94,22 @@ function Signup() {
 							className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 							required
 						/>
-            {/* {errors && <p style={{ color: "red" }}>{errors}</p>} */}
 					</div>
 					<button
 						type="submit"
+						disabled={isSubmitting}
 						className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
 					>
 						Sign Up
 					</button>
 					<p className="text-sm font-light text-gray-500 dark:text-gray-400">
 						Have an account?{" "}
-						<a
-							href="/login"
+						<Link
+							to="/login"
 							className="font-medium text-primary-600 hover:underline dark:text-primary-500 cursor-pointer"
 						>
 							Sign In
-						</a>
+						</Link>
 					</p>
 				</form>
 			</div>

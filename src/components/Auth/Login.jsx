@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 // import { login, passwordValidate } from "../../services/authService";
 
 function Login() {
@@ -83,12 +84,12 @@ function Login() {
 					</button>
 					<p className="text-sm font-light text-gray-500 dark:text-gray-400">
 						Don’t have an account yet?{" "}
-						<a
-							href="/signup"
+						<Link
+							to="/signup"
 							className="font-medium text-primary-600 hover:underline dark:text-primary-500 cursor-pointer"
 						>
 							Sign Up
-						</a>
+						</Link>
 					</p>
 				</form>
 			</div>
