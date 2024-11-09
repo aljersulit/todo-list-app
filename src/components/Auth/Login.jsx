@@ -80,12 +80,12 @@ function Login() {
 						/>
 					</div>
 					<div className="flex items-center justify-between">
-						<a
-							href="#"
+						<Link
+							to="/recovery"
 							className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
 						>
 							Forgot password?
-						</a>
+						</Link>
 					</div>
 					<button
 						type="submit"

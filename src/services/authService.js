@@ -3,7 +3,7 @@ import {
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
 	signOut,
-	validatePassword
+	sendPasswordResetEmail
 } from "firebase/auth";
 
 const signup = (email, password) =>
@@ -14,7 +14,6 @@ const login = (email, password) =>
 
 const logout = () => signOut(auth);
 
-const passwordValidate = (passwordFromUser) =>
-	validatePassword(auth, passwordFromUser);
+const resetPassword = (email) => sendPasswordResetEmail(auth, email);
 
-export { signup, login, logout, passwordValidate};
+export { signup, login, logout, resetPassword};
