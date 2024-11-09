@@ -17,6 +17,4 @@ const logout = () => signOut(auth);
 const passwordValidate = (passwordFromUser) =>
 	validatePassword(auth, passwordFromUser);
 
-
-
 export { signup, login, logout, passwordValidate};
