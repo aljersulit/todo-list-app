@@ -2,13 +2,17 @@ import { useState, useRef } from "react";
 import PropTypes from "prop-types";
 import { doc, updateDoc, deleteDoc } from "firebase/firestore";
 import { db } from "../firebaseConfig";
+import { useAuth } from "../context/AuthContext";
+
 function TodoItem({ id, title, body, isCompleted }) {
 	const [isTitleEditable, setIsTitleEditable] = useState(false);
 	const titleInputRef = useRef(null);
+	const currentUser = useAuth();
+
 
 	async function toggleComplete() {
 		try {
-			const docRef = doc(db, "todos", id);
+			const docRef = doc(db, `users/${currentUser.uid}/todos`, id);
 			await updateDoc(docRef, {
 				isCompleted: !isCompleted,
 			});
@@ -26,7 +30,7 @@ function TodoItem({ id, title, body, isCompleted }) {
 
 	async function handleChangeNote(e) {
 		try {
-			const docRef = doc(db, "todos", id);
+			const docRef = doc(db, `users/${currentUser.uid}/todos`, id);
 			await updateDoc(docRef, {
 				body: e.target.value,
 			});
@@ -44,7 +48,7 @@ function TodoItem({ id, title, body, isCompleted }) {
 
 	async function handleUpdateTitle(e) {
 		try {
-			const docRef = doc(db, "todos", id);
+			const docRef = doc(db, `users/${currentUser.uid}/todos`, id);
 			await updateDoc(docRef, {
 				title: e.target.value,
 			});
@@ -62,7 +66,7 @@ function TodoItem({ id, title, body, isCompleted }) {
 
 	async function handleDeleteTodo() {
 		try {
-			const docRef = doc(db, 'todos', id);
+			const docRef = doc(db, `users/${currentUser.uid}/todos`, id);
 			await deleteDoc(docRef);
 		} catch (error) {
 			switch(error.code) {

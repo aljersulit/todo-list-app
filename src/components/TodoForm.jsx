@@ -1,9 +1,12 @@
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { useTodoContext } from "../context/TodoContext";
+import { useAuth } from "../context/AuthContext";
 
 function TodoForm() {
 	const { state, dispatch } = useTodoContext();
+  const currentUser = useAuth();
+
 	function handleChange(e) {
 		dispatch({ type: "SET_NEW_TODO", payload: e.target.value });
 	}
@@ -14,12 +17,12 @@ function TodoForm() {
 			try {
 				const newTodo = {
 					title: state.newTodo,
-					body: null,
+					body: "",
 					isCompleted: false,
 					createdAt: Date(),
 				}
 				
-				const todosCollectionRef = collection(db, "todos");
+				const todosCollectionRef = collection(db, `users/${currentUser.uid}/todos`);
 				dispatch({type: "ADD_NEW_TODO"});
 				await addDoc(todosCollectionRef, newTodo);
 			} catch (error) {
