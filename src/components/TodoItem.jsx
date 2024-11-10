@@ -13,8 +13,14 @@ function TodoItem({ id, title, body, isCompleted }) {
 				isCompleted: !isCompleted,
 			});
 		} catch (error) {
-			alert("Something went wrong. Try again later");
-			console.error(error);
+			switch(error.code) {
+				case "firestore/not-found":
+					alert("The todo you're trying to update doesn't exist.");
+					break;
+				default:
+					alert("Something went wrong. Try again later");
+					console.error(error);
+			}
 		}
 	}
 
@@ -25,8 +31,14 @@ function TodoItem({ id, title, body, isCompleted }) {
 				body: e.target.value,
 			});
 		} catch (error) {
-			alert("Something went wrong. Try again later");
-			console.error(error);
+			switch(error.code) {
+				case "firestore/not-found":
+					alert("The todo you're trying to update doesn't exist.");
+					break;
+				default:
+					alert("Something went wrong. Try again later");
+					console.error(error);
+			}
 		}
 	}
 
@@ -37,8 +49,14 @@ function TodoItem({ id, title, body, isCompleted }) {
 				title: e.target.value,
 			});
 		} catch (error) {
-			alert("Something went wrong. Try again later");
-			console.error(error);
+			switch(error.code) {
+				case "firestore/not-found":
+					alert("The todo you're trying to update doesn't exist.");
+					break;
+				default:
+					alert("Something went wrong. Try again later");
+					console.error(error);
+			}
 		}
 	}
 
@@ -47,8 +65,14 @@ function TodoItem({ id, title, body, isCompleted }) {
 			const docRef = doc(db, 'todos', id);
 			await deleteDoc(docRef);
 		} catch (error) {
-			alert("Something went wrong. Try again later");
-			console.error(error);
+			switch(error.code) {
+				case "firestore/not-found":
+					alert("The todo you're trying to update doesn't exist.");
+					break;
+				default:
+					alert("Something went wrong. Try again later");
+					console.error(error);
+			}
 		}
 	}
 
