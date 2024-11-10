@@ -3,7 +3,7 @@ import TodoItem from "./TodoItem";
 import { useTodoContext } from "../context/TodoContext";
 
 function TodoList() {
-	const state = useTodoContext();
+	const { state } = useTodoContext();
 
 	return (
 		<div className="bg-white shadow-md rounded-lg p-6">
