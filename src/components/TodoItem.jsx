@@ -84,17 +84,24 @@ function TodoItem({ id, title, body, isCompleted, deadline, priorityLevel }) {
 	}
 
 	async function handleDeleteTodo() {
-		try {
-			const docRef = doc(db, `users/${currentUser.uid}/todos`, id);
-			await deleteDoc(docRef);
-		} catch (error) {
-			switch (error.code) {
-				case "firestore/not-found":
-					alert("The todo you're trying to update doesn't exist.");
-					break;
-				default:
-					alert("Something went wrong. Try again later");
-					console.error(error);
+		const confirmDelete = window.confirm(
+			"Are you sure you want to delete this task?"
+		);
+		if (confirmDelete) {
+			try {
+				const docRef = doc(db, `users/${currentUser.uid}/todos`, id);
+				await deleteDoc(docRef);
+			} catch (error) {
+				switch (error.code) {
+					case "firestore/not-found":
+						alert(
+							"The todo you're trying to update doesn't exist."
+						);
+						break;
+					default:
+						alert("Something went wrong. Try again later");
+						console.error(error);
+				}
 			}
 		}
 	}
@@ -171,7 +178,9 @@ function TodoItem({ id, title, body, isCompleted, deadline, priorityLevel }) {
 							onChange={handleUpdateTitle}
 						/>
 					) : (
-						<span className={`${isCompleted && "line-through"}`}>{title}</span>
+						<span className={`${isCompleted && "line-through"}`}>
+							{title}
+						</span>
 					)}
 				</label>
 
