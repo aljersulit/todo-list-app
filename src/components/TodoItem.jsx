@@ -15,6 +15,18 @@ function TodoItem({id, title, body, isCompleted}) {
 		}
 	}
 
+	async function handleChangeNote(e) {
+		try {
+			const docRef = doc(db, 'todos', id);
+			await updateDoc(docRef, {
+				body: e.target.value
+			})
+		} catch (error) {
+			alert("Something went wrong. Try again later");
+			console.error(error);
+		}
+	}
+
 	return (
 		<li className="border-b border-gray-200">
 			<div className="flex items-center justify-between py-4">
@@ -43,6 +55,7 @@ function TodoItem({id, title, body, isCompleted}) {
 				placeholder="Notes..."
 				className="w-full"
         value={body}
+				onChange={handleChangeNote}
 			/>
 		</li>
 	);
