@@ -1,6 +1,7 @@
 import { createContext, useContext, useReducer } from "react";
 import useTodos from "../hooks/useTodos";
 import PropTypes from "prop-types";
+import { useAuth } from "./AuthContext";
 
 const TodoContext = createContext();
 
@@ -35,7 +36,8 @@ function todoReducer(state, action) {
 
 export const TodoProvider = ({ children }) => {
 	const [state, dispatch] = useReducer(todoReducer, initialTodos);
-	useTodos(dispatch);
+  const currentUser = useAuth();
+	useTodos(currentUser, dispatch);
 
 	return (
 		<TodoContext.Provider value={{ state, dispatch }}>

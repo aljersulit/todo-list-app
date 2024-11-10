@@ -3,7 +3,7 @@ import { logout } from "../services/authService";
 import todoLogo from "../assets/todoLogo.png";
 
 function Navbar() {
-  const { currentUser } = useAuth();
+  const currentUser = useAuth();
   
   async function handleLogout() {
     try {
