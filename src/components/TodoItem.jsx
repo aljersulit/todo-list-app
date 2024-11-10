@@ -38,7 +38,7 @@ function TodoItem({title, body, isCompleted}) {
 export default TodoItem;
 
 TodoItem.propTypes = {
-  title: PropTypes.node.isRequired,
-  body: PropTypes.node.isRequired,
-  isCompleted: PropTypes.node.isRequired
+  title: PropTypes.string.isRequired,
+  body: PropTypes.string,
+  isCompleted: PropTypes.bool.isRequired
 };
