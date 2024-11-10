@@ -14,6 +14,7 @@ function TodoList() {
 					return (
 						<TodoItem
 							key={todo.id}
+							id={todo.id}
 							title={todo.title}
 							body={todo.body}
 							isCompleted={todo.isCompleted}
