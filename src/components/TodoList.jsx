@@ -1,14 +1,24 @@
-// import { useReducer } from "react";
-// import { todoReducer, initialState } from "../constants/todoReducer";
-import { useState } from "react";
+import { useReducer } from "react";
 import useTodos from "../hooks/useTodos";
 import TodoForm from "./TodoForm";
 import TodoItem from "./TodoItem";
 
+
+function todoReducer(state, action) {
+	switch(action.type) {
+		case "FETCH_TODOS":
+			return {
+				...state,
+				todos: action.payload
+			}
+		default:
+			return state;
+	}
+}
+
 function TodoList() {
-  // const [state, dispatch] = useReducer(todoReducer, initialState);
-  const [todos, setTodos] = useState([]);
-  useTodos(setTodos);
+  const [state, dispatch] = useReducer(todoReducer, {todos: []});
+  useTodos(dispatch);
 
 	return (
 		<>
@@ -16,7 +26,7 @@ function TodoList() {
 				<TodoForm />
 
 				<ul id="todo-list">
-          {todos.map((todo) => {
+          {state.todos.map((todo) => {
             return <TodoItem key={todo.id} title={todo.title} body={todo.body} isCompleted={todo.isCompleted}/>
           })}
 				</ul>
