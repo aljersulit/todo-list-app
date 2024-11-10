@@ -19,6 +19,7 @@ function TodoForm() {
 					title: state.newTodo,
 					body: "",
 					isCompleted: false,
+					deadline: null,
 					createdAt: Date(),
 				}
 				

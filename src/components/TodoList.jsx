@@ -4,7 +4,6 @@ import { useTodoContext } from "../context/TodoContext";
 
 function TodoList() {
 	const { state } = useTodoContext();
-
 	return (
 		<div className="bg-white shadow-md rounded-lg p-6">
 			<TodoForm />
@@ -18,6 +17,7 @@ function TodoList() {
 							title={todo.title}
 							body={todo.body}
 							isCompleted={todo.isCompleted}
+							deadline={todo.deadline}
 						/>
 					);
 				})}
