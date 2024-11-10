@@ -18,6 +18,7 @@ function TodoList() {
 							body={todo.body}
 							isCompleted={todo.isCompleted}
 							deadline={todo.deadline}
+							priorityLevel={todo.priorityLevel}
 						/>
 					);
 				})}

@@ -6,10 +6,28 @@ import { doc, updateDoc, deleteDoc } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { useAuth } from "../context/AuthContext";
 
-function TodoItem({ id, title, body, isCompleted, deadline }) {
+function TodoItem({ id, title, body, isCompleted, deadline, priorityLevel }) {
 	const [isTitleEditable, setIsTitleEditable] = useState(false);
 	const titleInputRef = useRef(null);
 	const currentUser = useAuth();
+
+	async function handlePriorityChange(e) {
+		try {
+			const docRef = doc(db, `users/${currentUser.uid}/todos`, id);
+			await updateDoc(docRef, {
+				priorityLevel: e.target.value,
+			});
+		} catch (error) {
+			switch (error.code) {
+				case "firestore/not-found":
+					alert("The todo you're trying to update doesn't exist.");
+					break;
+				default:
+					alert("Something went wrong. Try again later");
+					console.error(error);
+			}
+		}
+	}
 
 	async function toggleComplete() {
 		try {
@@ -85,7 +103,7 @@ function TodoItem({ id, title, body, isCompleted, deadline }) {
 		try {
 			const docRef = doc(db, `users/${currentUser.uid}/todos`, id);
 			await updateDoc(docRef, {
-				deadline: date.getTime()
+				deadline: date.getTime(),
 			});
 		} catch (error) {
 			switch (error.code) {
@@ -110,9 +128,21 @@ function TodoItem({ id, title, body, isCompleted, deadline }) {
 	return (
 		<li className="border-b border-gray-200">
 			<div className="flex justify-between gap-x-1">
-				<h3 className="bg-red-600 text-neutral-50 px-2 py-px scale-75">
-					High
-				</h3>
+				<select
+					className={`${
+						{
+							normal: "bg-green-500",
+							medium: "bg-blue-500",
+							high: "bg-red-500",
+						}[priorityLevel]
+					} text-neutral-50 px-2 py-px scale-75`}
+					value={priorityLevel}
+					onChange={handlePriorityChange}
+				>
+					<option value="normal">Normal</option>
+					<option value="medium">Medium</option>
+					<option value="high">High</option>
+				</select>
 				<div>
 					<DatePicker
 						className="w-28 text-sm"
@@ -141,7 +171,7 @@ function TodoItem({ id, title, body, isCompleted, deadline }) {
 							onChange={handleUpdateTitle}
 						/>
 					) : (
-						<span>{title}</span>
+						<span className={`${isCompleted && "line-through"}`}>{title}</span>
 					)}
 				</label>
 
@@ -180,6 +210,7 @@ TodoItem.propTypes = {
 	title: PropTypes.string.isRequired,
 	body: PropTypes.string,
 	isCompleted: PropTypes.bool.isRequired,
-	deadline: PropTypes.number
+	deadline: PropTypes.number,
+	priorityLevel: PropTypes.string.isRequired,
 };
 

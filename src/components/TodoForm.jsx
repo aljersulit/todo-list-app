@@ -20,6 +20,7 @@ function TodoForm() {
 					body: "",
 					isCompleted: false,
 					deadline: null,
+					priorityLevel: "normal",
 					createdAt: Date(),
 				}
 				
