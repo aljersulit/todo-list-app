@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
+import { TodoProvider } from "./context/TodoContext";
 
 import Layout from "./components/Layout";
 import Login from "./components/Auth/Login";
@@ -18,7 +19,9 @@ function App() {
 							index
 							element={
 								<PrivateRoute>
-									<TodoList />
+                  <TodoProvider>
+									  <TodoList />
+                  </TodoProvider>
 								</PrivateRoute>
 							}
 						/>

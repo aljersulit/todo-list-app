@@ -1,0 +1,40 @@
+import { createContext, useContext, useReducer } from "react";
+import useTodos from "../hooks/useTodos";
+import PropTypes from 'prop-types';
+
+const TodoContext = createContext();
+
+export const useTodoContext = () => useContext(TodoContext);
+
+const initialTodos = {
+	todos: [],
+	newTodo: ""
+}
+
+function todoReducer(state, action) {
+	switch(action.type) {
+		case "FETCH_TODOS":
+			return {
+				...state,
+				todos: action.payload
+			}
+		default:
+			return state;
+	}
+}
+
+export const TodoProvider = ({children}) => {
+  const [state, dispatch] = useReducer(todoReducer, initialTodos);
+  useTodos(dispatch);
+
+
+  return (
+    <TodoContext.Provider value={state}>
+      {children}
+    </TodoContext.Provider>
+  )
+}
+
+TodoProvider.propTypes = {
+  children: PropTypes.node.isRequired
+}
