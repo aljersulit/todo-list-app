@@ -16,4 +16,4 @@ const logout = () => signOut(auth);
 
 const resetPassword = (email) => sendPasswordResetEmail(auth, email);
 
-export { signup, login, logout, resetPassword};
+export { signup, login, logout, resetPassword };
