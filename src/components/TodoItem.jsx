@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import PropTypes from "prop-types";
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, updateDoc, deleteDoc } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 function TodoItem({ id, title, body, isCompleted }) {
 	const [isTitleEditable, setIsTitleEditable] = useState(false);
@@ -36,6 +36,16 @@ function TodoItem({ id, title, body, isCompleted }) {
 			await updateDoc(docRef, {
 				title: e.target.value,
 			});
+		} catch (error) {
+			alert("Something went wrong. Try again later");
+			console.error(error);
+		}
+	}
+
+	async function handleDeleteTodo() {
+		try {
+			const docRef = doc(db, 'todos', id);
+			await deleteDoc(docRef);
 		} catch (error) {
 			alert("Something went wrong. Try again later");
 			console.error(error);
@@ -78,6 +88,7 @@ function TodoItem({ id, title, body, isCompleted }) {
 					<button
 						className="text-red-500 hover:text-red-700
                       mr-2 delete-btn"
+						onClick={handleDeleteTodo}
 					>
 						Delete
 					</button>
