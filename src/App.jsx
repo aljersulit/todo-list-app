@@ -8,6 +8,7 @@ import Signup from "./components/Auth/Signup";
 import ForgotPassword from "./components/Auth/ForgotPassword";
 import TodoList from "./components/TodoList";
 import PrivateRoute from "./components/Auth/PrivateRoute";
+import NotFound from "./components/NotFound";
 
 function App() {
 	return (
@@ -29,6 +30,7 @@ function App() {
 						<Route path="signup" element={<Signup />} />
 						<Route path="recovery" element={<ForgotPassword />} />
 					</Route>
+					<Route path="*" element={<NotFound />} />
 				</Routes>
 			</BrowserRouter>
 		</AuthProvider>
